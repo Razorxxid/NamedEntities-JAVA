@@ -7,5 +7,12 @@ package parser;
  * */
 
 public class RedditParser extends GeneralParser {
+	
 
+	public RedditParser(String fname) {
+		
+		super(fname);
+		
+	}
+	
 }

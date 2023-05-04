@@ -1,3 +1,5 @@
+import parser.SubscriptionParser;
+import subscription.Subscription;
 
 public class FeedReaderMain {
 
@@ -16,6 +18,11 @@ public class FeedReaderMain {
 			Llamar al constructor de Feed
 			LLamar al prettyPrint del Feed para ver los articulos del feed en forma legible y amigable para el usuario
 			*/
+
+			/*Test de Suscription parser */
+		    SubscriptionParser subParser = new SubscriptionParser("C:\\Users\\tomas\\OneDrive\\Escritorio\\Lab2\\grupo04_lab02_2023\\config\\subscriptions.json");
+			Subscription subs = subParser.GetFromFile();
+		    subs.prettyPrint();
 			
 		} else if (args.length == 1){
 			

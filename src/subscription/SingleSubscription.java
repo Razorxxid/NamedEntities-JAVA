@@ -15,7 +15,7 @@ public class SingleSubscription {
 	public SingleSubscription(String url, List<String> ulrParams, String urlType) {
 		super();
 		this.url = url;
-		this.ulrParams = new ArrayList<String>() ;
+		this.ulrParams = ulrParams;
 		this.urlType = urlType;
 	}
 

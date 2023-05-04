@@ -6,4 +6,10 @@ package parser;
 
 public class RssParser extends GeneralParser {
 
+	public RssParser(String fname) {
+		
+		super(fname);
+		
+	}
+
 }
