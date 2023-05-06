@@ -1,5 +1,10 @@
+import httpRequest.httpRequester;
 import parser.SubscriptionParser;
 import subscription.Subscription;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class FeedReaderMain {
 
@@ -19,10 +24,18 @@ public class FeedReaderMain {
 			LLamar al prettyPrint del Feed para ver los articulos del feed en forma legible y amigable para el usuario
 			*/
 
-			/*Test de Suscription parser */
-		    SubscriptionParser subParser = new SubscriptionParser("C:\\Users\\tomas\\OneDrive\\Escritorio\\Lab2\\grupo04_lab02_2023\\config\\subscriptions.json");
-			Subscription subs = subParser.GetFromFile();
-		    subs.prettyPrint();
+			/*Test de Suscription parser*/
+		    SubscriptionParser subParser = new SubscriptionParser("grupo04_lab02_2023/config/subscriptions.json");
+			Subscription subs = subParser.GetFromFile(); 
+			subs.prettyPrint();
+			/*Test de httpRequester*/
+			httpRequester httpReq = new httpRequester();
+			String RedditReq = httpReq.getFeedReddit("https://www.reddit.com/r/Sales/hot/.json?count=100");
+			String rssReq = httpReq.getFeedRss("https://rss.nytimes.com/services/xml/rss/nyt/Business.xml");
+			/* tendra un feo output  */
+			System.out.println(RedditReq);
+			//System.out.println(rssReq); 
+
 			
 		} else if (args.length == 1){
 			
