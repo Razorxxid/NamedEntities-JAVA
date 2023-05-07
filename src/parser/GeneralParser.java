@@ -1,4 +1,5 @@
 package parser;
+import feed.Feed;
 
 
 
@@ -17,5 +18,9 @@ public abstract class GeneralParser {
 		return filename;
 	}
 
-     
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+	
+
 }

@@ -27,7 +27,7 @@ public class SubscriptionParser extends GeneralParser{
 	// Devuelve un objeto de tipo Subscription
 
 
-	public Subscription GetFromFile () {
+	public Subscription parser() {
 		
 		// Crear nueva suscripcion
 		subscription.Subscription subs = new Subscription(this.filename);
