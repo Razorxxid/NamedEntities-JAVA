@@ -1,10 +1,6 @@
 package httpRequest;
 
-import subscription.SingleSubscription;
-import subscription.Subscription;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.net.URL;
 import java.io.IOException;
 import java.io.BufferedReader;
@@ -60,7 +56,8 @@ public class httpRequester {
 			if (slashIndex >= 0 && dotIndex > slashIndex) {
 				fileName = urlFeed.substring(slashIndex + 1, dotIndex);
 			}
-			File outputFile = new File("xml-files/" + fileName + ".xml");
+			String filePath = "xml-files/" + fileName + ".xml";
+			File outputFile = new File(filePath);
 			
 			// crea la carpeta xml-files si no existe
 			if (!outputFile.getParentFile().exists()) {
@@ -74,7 +71,7 @@ public class httpRequester {
 
 			// se cierra la conexion y se devuelve el contenido
 			con.disconnect();
-			return responseContent.toString();
+			return filePath;
 			
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
@@ -136,18 +133,20 @@ public class httpRequester {
 				}
 				
 				// escribe el archivo y lo cierra al finalizar
-				FileWriter file = new FileWriter("json-files/" + subredditName + ".json");
+				String filePath = "json-files/" + subredditName + ".json";
+				FileWriter file = new FileWriter(filePath);
 				file.write(jsonResponse.toString());
 				file.flush();
 				file.close();
 
 				// se cierra la conexion y se devuelve el contenido
 				con.disconnect();
+				return filePath;
 				
 			} catch (JSONException e) {
 				e.printStackTrace();
+				return null;
 			}
-			return responseContent.toString();
 	
 		} catch (MalformedURLException e) {
 			e.printStackTrace();

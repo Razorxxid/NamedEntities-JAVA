@@ -32,12 +32,12 @@ public class FeedReaderMain {
 			/*Test de httpRequester*/
 			httpRequester httpReq = new httpRequester();
 			String RedditReq = httpReq.getFeedReddit("https://www.reddit.com/r/Sales/hot/.json?count=100");
-			String rssReq = httpReq.getFeedRss("https://rss.nytimes.com/services/xml/rss/nyt/Business.xml");
+			String rssReq = httpReq.getFeedRss("https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml");
 			/* tendra un feo output  */
 			//System.out.println(RedditReq);
 			//System.out.println(rssReq); 
 			/*Test de parser*/
-			RedditParser feedParser = new RedditParser("json-files/Sales.json");
+			RssParser feedParser = new RssParser(rssReq);
 			Feed feed = feedParser.feedParser();
 			feed.prettyPrint();
 			
