@@ -25,7 +25,7 @@ public class SingleSubscription {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	public List<String> getUlrParams() {
+	public List<String> getUlrParamsList() {
 		return ulrParams;
 	}
 	public String getUlrParams(int i) {
@@ -43,10 +43,11 @@ public class SingleSubscription {
 	public void setUrlType(String urlType) {
 		this.urlType = urlType;
 	} 
+
 	
 	@Override
 	public String toString() {
-		return "{url=" + getUrl() + ", ulrParams=" + getUlrParams().toString() + ", urlType=" + getUrlType() + "}";
+		return "{url=" + getUrl() + ", ulrParams=" + getUlrParamsList().toString() + ", urlType=" + getUrlType() + "}";
 	}
 	
 	public void prettyPrint(){

@@ -1,8 +1,15 @@
 import httpRequest.httpRequester;
 import parser.SubscriptionParser;
+import subscription.SingleSubscription;
 import subscription.Subscription;
 import parser.RedditParser;
 import parser.RssParser;
+
+import namedEntity.heuristic.QuickHeuristic;
+import namedEntity.heuristic.RandomHeuristic;
+
+
+
 
 import feed.Feed;
 
@@ -25,23 +32,65 @@ public class FeedReaderMain {
 			LLamar al prettyPrint del Feed para ver los articulos del feed en forma legible y amigable para el usuario
 			*/
 
-			/*Test de Suscription parser*/
 		    SubscriptionParser subParser = new SubscriptionParser("grupo04_lab02_2023/config/subscriptions.json");
 			Subscription subs = subParser.parser(); 
-			subs.prettyPrint();
-			/*Test de httpRequester*/
-			httpRequester httpReq = new httpRequester();
-			String RedditReq = httpReq.getFeedReddit("https://www.reddit.com/r/Sales/hot/.json?count=100");
-			String rssReq = httpReq.getFeedRss("https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml");
-			/* tendra un feo output  */
-			//System.out.println(RedditReq);
-			//System.out.println(rssReq); 
-			/*Test de parser*/
-			RssParser feedParser = new RssParser(rssReq);
-			Feed feed = feedParser.feedParser();
-			feed.prettyPrint();
+
+			System.out.println("/n Feeds disponibles: /n");
+			System.out.println("Ingrese el numero del feed que desea leer: ");
+			for (int i = 0; i < subs.getSubscriptionListSize(); i++) {
+				String site = subs.getSingleSubscription(i).getUrl();
+				// slices the url to get the site name, from "https://" to "/"
+				site = site.substring(8, site.indexOf("/", 8));
+				System.out.println(i + " - " + site);
+			}
+
+			// asks for input
+			int feedNumber = Integer.parseInt(System.console().readLine());
+
+			System.out.println(subs.getSubscriptionListSize());
+			if (feedNumber >= 0 && feedNumber < subs.getSubscriptionListSize()) {
+				SingleSubscription chosenSub = subs.getSingleSubscription(feedNumber);
+				
+				System.out.println("Seleccione el tipo de articulos que desea leer: ");
+				for (int i = 0; i < chosenSub.getUlrParamsSize(); i++) {
+					System.out.println(i + " - " + chosenSub.getUlrParams(i));
+				}
+				int artNumber = Integer.parseInt(System.console().readLine());
+				
+				if (artNumber >= 0 && artNumber < chosenSub.getUlrParamsSize()) {
+					String urlType = chosenSub.getUrlType();
+					httpRequester httpReq = new httpRequester();
+					Feed feed = new Feed(urlType);
+
+					if (urlType.equals("reddit")) {
+						
+						String redditReq = httpReq.getFeedReddit(chosenSub, artNumber);
+						RedditParser feedParser = new RedditParser(redditReq);
+						feed = feedParser.feedParser();
+
+						//feed.prettyPrint();
+
+					} else if (urlType.equals("rss")) {
+
+						String rssReq = httpReq.getFeedRss(chosenSub, artNumber);
+						RssParser feedParser = new RssParser(rssReq);
+						feed = feedParser.feedParser();
+						
+						//feed.prettyPrint();
+					} 
+					
+					QuickHeuristic qh = new QuickHeuristic();
+					qh.euristicTest(feed);
+				} else {
+					System.out.println("Invalid article number");
+				}
+
+			} else {
+				System.out.println("Invalid feed number");
+				}
+
 			
-		} else if (args.length == 1){
+		} else if (args.length == 1 && args[0].equals("-ne")){
 			
 			/*
 			Leer el archivo de suscription por defecto;

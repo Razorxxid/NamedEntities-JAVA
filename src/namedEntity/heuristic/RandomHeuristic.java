@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import feed.Feed;
+import namedEntity.NamedEntity;
+
 public class RandomHeuristic extends Heuristic {
 	
 	private Random rnd = new Random();
@@ -34,8 +37,31 @@ public class RandomHeuristic extends Heuristic {
 	}
 
 	
-	public static void main(String[] args){
-//		RandomHeuristic rh = new RandomHeuristic();
+	public void euristicTest(Feed feed){
+		RandomHeuristic rh = new RandomHeuristic();
+		// named entity list
+		List<NamedEntity> namedEntityList = new ArrayList<NamedEntity>();
+		System.out.println(feed.getNumberOfArticles());
+		for (int i = 0; i < feed.getNumberOfArticles(); i++){
+			String[] words = feed.getArticle(i).getText().split(" ");
+			// if it ends with "," , "." , "'s", remove from the string
+
+			for (int j = 0; j < words.length; j++) {
+				if (rh.isEntity(words[j])) {
+					NamedEntity ne = new NamedEntity(words[j], rh.getCategory(words[j]), 1);
+					ne.prettyPrint();
+					if (!namedEntityList.contains(ne)) {
+						namedEntityList.add(ne);
+					} else {
+						namedEntityList.get(namedEntityList.indexOf(ne)).incFrequency();
+					}
+			}
+		}
+		}
+		for (int i = 1; i < namedEntityList.size(); i++) {
+			namedEntityList.get(i).prettyPrint();
+		}
 	}
-	
 }
+	
+

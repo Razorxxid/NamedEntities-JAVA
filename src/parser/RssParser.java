@@ -7,14 +7,11 @@ import java.text.SimpleDateFormat;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -41,7 +38,7 @@ public class RssParser<Item> extends GeneralParser {
 		try {
 			/* Lee el archivo XML y lo guarda en doc */
 			DocumentBuilder builder = factory.newDocumentBuilder();
-			Document doc = builder.parse(this.filename);
+			Document doc = builder.parse(this.getFilename());
 			NodeList itemList = doc.getElementsByTagName("item");
   
 			for (int i = 0; i < itemList.getLength(); i++) {

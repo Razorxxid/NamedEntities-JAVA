@@ -4,7 +4,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Date;
@@ -28,7 +27,8 @@ public class RedditParser extends GeneralParser {
 	public Feed feedParser() {
 		Feed feed = new Feed(this.filename);
 		try {
-			FileReader fileReader = new FileReader(this.filename);
+			// Lee el archivo JSON
+			FileReader fileReader = new FileReader(this.getFilename());
 			StringBuilder stringBuilder = new StringBuilder();
 			int c;
 			while ((c = fileReader.read()) != -1) {
@@ -38,25 +38,25 @@ public class RedditParser extends GeneralParser {
 			String jsonStr = stringBuilder.toString();
 			JSONObject jsonData = new JSONObject(jsonStr);
 	
-			// Get the children array from the data object
+			// Obtiene el arreglo children del objeto data
 			JSONArray children = jsonData.getJSONObject("data").getJSONArray("children");
 	
-			// Loop through the children array and get the data for each child
+			// Itera sobre los elementos del arreglo children
 			for (int i = 0; i < children.length(); i++) {
 				JSONObject childData = children.getJSONObject(i).getJSONObject("data");
 	
-				// Get the created_utc property from the data object
+				// Obtiene el timestamp de la creacion del articulo
 				long createdUtc = childData.getLong("created_utc");
 	
-				// Convert the timestamp to a Date object
+				// Crea un objeto Date con el timestamp
 				Date pubDate = new Date(createdUtc * 1000);
 	
-				// Get the other properties you need from the data object
+				// Obtiene los demas datos del articulo
 				String title = childData.getString("title");
 				String description = childData.getString("selftext");
 				String link = childData.getString("url");
 	
-				// Create a new Article object with the properties above
+				// Crea un objeto Article y lo agrega al feed
 				Article art = new Article(title, description, pubDate, link);
 				feed.addArticle(art);
 			}

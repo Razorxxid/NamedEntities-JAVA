@@ -24,11 +24,11 @@ public class NamedEntity {
 	}
 
 	public String getCategory() {
-		return name;
+		return category;
 	}
 
-	public void setCategory(String name) {
-		this.name = name;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	public int getFrequency() {
@@ -43,12 +43,16 @@ public class NamedEntity {
 		this.frequency++;
 	}
 
+	public boolean eq(NamedEntity other){
+		return this.getName().equals(other.getName());
+	}
+
 	@Override
 	public String toString() {
-		return "ObjectNamedEntity [name=" + name + ", frequency=" + frequency + "]";
+		return "ObjectNamedEntity [name=" + name + " , frequency=" + frequency + ", category=" + category +"]";
 	}
 	public void prettyPrint(){
-		System.out.println(this.getName() + " " + this.getFrequency());
+		System.out.println(this.getName() + " " + this.getFrequency() + " ");
 	}
 	
 	

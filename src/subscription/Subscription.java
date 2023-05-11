@@ -25,6 +25,10 @@ public class Subscription {
 		return this.suscriptionsList.get(i);
 	}
 
+	public int getSubscriptionListSize(){
+		return this.suscriptionsList.size();
+	}
+
 	@Override
 	public String toString() {
 		String str ="";
